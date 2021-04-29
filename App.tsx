@@ -1,12 +1,20 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
+import React,{useEffect} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {db} from './firebase/index'
+
 
 export default function App() {
+  useEffect(()=>{
+    db.collection("test").get().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+          console.log(`${doc.id} => ${doc.data()}`);
+          console.log("test")
+      });
+    });
+  })
   return (
     <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
+      <Text>Open up App.js to start working on your app!</Text>
     </View>
   );
 }
