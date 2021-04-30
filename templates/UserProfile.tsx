@@ -1,36 +1,27 @@
-import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
-import { useDispatch } from 'react-redux'
-import { resetPassword } from '../reducks/user/operation';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../reducks/user/operation';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
-const Reset: React.FC = () => {
-    const dispatch = useDispatch();
-    const [email, setEmail] = useState("");
+const UserProfile: React.FC = () => {
     const navigation = useNavigation();
-
-    const inputEmail = useCallback((event) => {
-        setEmail(event.target.value)
-    }, [setEmail]);
-
+    const dispatch = useDispatch();
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>パスワードのリセット</Text>
-            <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={inputEmail}
-                autoCapitalize="none"
-                autoCorrect={false}
-                placeholder="Email"
-            />
-            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={resetPassword(email,navigation)}>
-                <Text style={styles.buttonTitle}>パスワードのリセットメールを送信する</Text>
+            <Text style={styles.title}>ユーザー画面</Text>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(signOut(navigation))}>
+                <Text style={styles.buttonTitle}>
+                <Icon name="logout" size={30} />
+                ログアウト
+                </Text>
             </TouchableHighlight>
         </View>
-    )
+    );
 }
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -66,4 +57,5 @@ const styles = StyleSheet.create({
         color: '#fff',
     },
 });
-export default Reset
+
+export default UserProfile;

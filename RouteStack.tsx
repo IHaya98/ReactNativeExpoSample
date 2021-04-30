@@ -4,7 +4,10 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from './reducks/store/type';
 import { listenAuthState } from './reducks/user/operation';
-import { Home, Reset, SignIn, SignUp } from './templates';
+import { Home, Reset, SignIn, SignUp, UserProfile } from './templates';
+import { TouchableOpacity ,Text} from 'react-native';
+//import Header from './components/Header/Header';
+
 const Stack = createStackNavigator();
 const TabStack = createMaterialTopTabNavigator();
 export const RootStack = () => {
@@ -16,16 +19,27 @@ export const RootStack = () => {
             dispatch(listenAuthState())
         }
     }, []);
+    const Header = () => {
+        return (
+            <TouchableOpacity onPress={() => alert('headerTitle Tapped')}>
+                <Text>Title Component</Text>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <>
             {isSignedIn ? (
+                <>
                 <TabStack.Navigator>
-                    <Stack.Screen name="Home" component={Home} />
+                    <TabStack.Screen name="Home" component={Home} />
+                    <TabStack.Screen name="UserProfile" component={UserProfile} />
                 </TabStack.Navigator>
+                </>
             ) : (
                 <Stack.Navigator
                     initialRouteName="SignIn"
+                    screenOptions={{headerTitle: Header}}
                 >
                     <Stack.Screen name="SignIn" component={SignIn} />
                     <Stack.Screen name="SignUp" component={SignUp} />
@@ -34,14 +48,4 @@ export const RootStack = () => {
             )}
         </>
     );
-};
-export type SignUpNavigationProp = StackNavigationProp<StackParamList, 'SignUp'>;
-export type SignInNavigationProp = StackNavigationProp<StackParamList, 'SignIn'>;
-export type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
-export type ResetNavigationProp = StackNavigationProp<StackParamList, 'Reset'>;
-type StackParamList = {
-    Home: undefined;
-    SignIn: undefined;
-    SignUp: undefined;
-    Reset: undefined;
 };

@@ -1,11 +1,10 @@
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
-import { HomeNavigationProp, ResetNavigationProp, SignInNavigationProp, SignUpNavigationProp } from '../../RouteStack';
 import { signInAction, signOutAction } from './action';
 
 type SignIn = {
     email: string,
     password: string,
-    navigation: SignInNavigationProp
+    navigation: any
 }
 // 新規登録ボタンを押した時の処理
 export const signIn = (param: SignIn) => {
@@ -44,7 +43,7 @@ type SignUp = {
     email: string,
     username: string,
     password: string,
-    navigation: SignUpNavigationProp
+    navigation: any
 }
 // 新規登録ボタンを押した時の処理
 export const signUp = (param: SignUp) => {
@@ -105,7 +104,7 @@ export const listenAuthState = () => {
     }
 }
 
-export const resetPassword = (email:string,navigation:ResetNavigationProp) => {
+export const resetPassword = (email:string,navigation:any) => {
     return async() =>{
         if(email === ""){
             alert("必須項目が未入力です")
@@ -123,7 +122,7 @@ export const resetPassword = (email:string,navigation:ResetNavigationProp) => {
     }
 }
 
-export const signOut = (navigation:HomeNavigationProp) => {
+export const signOut = (navigation:any) => {
     return async(dispatch:any) => {
         auth.signOut()
             .then(() => {

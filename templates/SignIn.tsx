@@ -1,17 +1,11 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signIn } from '../reducks/user/operation';
-import { SignInNavigationProp } from '../RouteStack';
 
-
-
-type Props = {
-    navigation: SignInNavigationProp;
-};
-
-const SignIn: React.FC<Props> = (props) => {
-    const navigation= props.navigation;
+const SignIn: React.FC = () => {
+    const navigation= useNavigation();
 
     const [email, setEmail] = useState(""),
         [password, setPassword] = useState("");

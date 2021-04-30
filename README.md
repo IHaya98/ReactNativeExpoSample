@@ -12,3 +12,7 @@ export const firebaseConfig = {
   appId: "<appId>"
 };
 ```
+
+
+#### react-native-vector-iconsの名前一覧 <br>
+https://oblador.github.io/react-native-vector-icons/

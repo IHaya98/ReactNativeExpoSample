@@ -2,33 +2,21 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signOut } from '../reducks/user/operation';
-import { HomeNavigationProp } from '../RouteStack';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useNavigation } from '@react-navigation/native';
 
-
-
-type Props = {
-    navigation: HomeNavigationProp;
-};
-
-const Home: React.FC<Props> = (props) => {
-    const navigation = props.navigation;
-
-    const [email, setEmail] = useState(""),
-        [password, setPassword] = useState("");
+const Home: React.FC = () => {
+    const navigation = useNavigation();
     const dispatch = useDispatch();
 
-    const inputEmail = useCallback((text) => {
-        setEmail(text);
-    }, [setEmail]);
-
-    const inputPassword = useCallback((text) => {
-        setPassword(text);
-    }, [setPassword]);
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Home</Text>
+            <Text style={styles.title}>ホーム</Text>
             <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(signOut(navigation))}>
-                <Text style={styles.buttonTitle}>ログアウト</Text>
+                <Text style={styles.buttonTitle}>
+                    <Icon name="logout" size={30} />
+                ログアウト
+                </Text>
             </TouchableHighlight>
         </View>
     );
