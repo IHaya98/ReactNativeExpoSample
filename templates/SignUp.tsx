@@ -2,51 +2,64 @@ import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../reducks/user/operation';
-import { SignUpNavigationProp} from '../RouteStack';
+import { SignUpNavigationProp } from '../RouteStack';
 
 type Props = {
-    navigation: SignUpNavigationProp;
+  navigation: SignUpNavigationProp;
 };
 
 const SignUp: React.FC<Props> = (props) => {
-    const  [email,setEmail] = useState(""),
-    [password,setPassword] = useState("");
-    //const dispatch = useDispatch();
-    const navigation = props.navigation;
+  const [email, setEmail] = useState(""),
+    [username, setUsername] = useState(""),
+    [password, setPassword] = useState("");
+  const dispatch = useDispatch();
+  const navigation = props.navigation;
 
-    const inputEmail = useCallback((text) => {
-        setEmail(text);
-    },[setEmail]);
+  const inputEmail = useCallback((text) => {
+    setUsername(text);
+  }, [setUsername]);
 
-    const inputPassword = useCallback((text) => {
-        setPassword(text);
-    },[setPassword]);
+  const inputUsername = useCallback((text) => {
+    setEmail(text);
+  }, [setEmail]);
 
-    return (
-      <View style={styles.container}>
-        <Text style={styles.title}>新規登録</Text>
-        <TextInput
-          style={styles.input}
-          value={email}
-          onChangeText={inputEmail}
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="Email"
-        />
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={inputPassword}
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="Password"
-          secureTextEntry
-        />
-        <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={signUp({email,password,navigation})}>
-          <Text style={styles.buttonTitle}>新規登録する</Text>
-        </TouchableHighlight>
-      </View>
-    );
+  const inputPassword = useCallback((text) => {
+    setPassword(text);
+  }, [setPassword]);
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.title}>新規登録</Text>
+      <TextInput
+        style={styles.input}
+        value={email}
+        onChangeText={inputEmail}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholder="Email"
+      />
+      <TextInput
+        style={styles.input}
+        value={username}
+        onChangeText={inputUsername}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholder="Username"
+      />
+      <TextInput
+        style={styles.input}
+        value={password}
+        onChangeText={inputPassword}
+        autoCapitalize="none"
+        autoCorrect={false}
+        placeholder="Password"
+        secureTextEntry
+      />
+      <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={dispatch(signUp({ email, username, password, navigation }))}>
+        <Text style={styles.buttonTitle}>新規登録する</Text>
+      </TouchableHighlight>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({

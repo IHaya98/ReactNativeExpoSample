@@ -1,24 +1,35 @@
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { State } from './reducks/store/type';
+import { listenAuthState } from './reducks/user/operation';
 import { Home, SignIn, SignUp } from './templates';
 const Stack = createStackNavigator();
 
 export const RootStack = () => {
+    const selector = useSelector((state: State) => state.users);
+    const isSignedIn = selector.isSignedIn;
+    const dispatch = useDispatch();
+    useEffect(() => {
+        if (!isSignedIn) {
+            dispatch(listenAuthState())
+        }
+    }, []);
+
     return (
         <Stack.Navigator
-            initialRouteName="SignIn"　//最初の画面
-            screenOptions={{
-                headerStyle: {
-                    backgroundColor: "#265366",
-                },
-                headerTintColor: "#fff",
-                headerTitleStyle: {
-                    fontWeight: "bold",
-                },
-            }}>
-            <Stack.Screen name="SignIn" component={SignIn} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-            <Stack.Screen name="Home" component={Home} />
+            initialRouteName="SignIn"
+        >
+            {isSignedIn ? (
+                <>
+                    <Stack.Screen name="Home" component={Home} />
+                </>
+            ) : (
+                <>
+                    <Stack.Screen name="SignIn" component={SignIn} />
+                    <Stack.Screen name="SignUp" component={SignUp} />
+                </>
+            )}
         </Stack.Navigator>
     );
 };
