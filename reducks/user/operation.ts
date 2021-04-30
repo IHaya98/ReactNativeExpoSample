@@ -1,5 +1,5 @@
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
-import { HomeNavigationProp, SignInNavigationProp, SignUpNavigationProp } from '../../RouteStack';
+import { HomeNavigationProp, ResetNavigationProp, SignInNavigationProp, SignUpNavigationProp } from '../../RouteStack';
 import { signInAction, signOutAction } from './action';
 
 type SignIn = {
@@ -11,6 +11,10 @@ type SignIn = {
 export const signIn = (param: SignIn) => {
     // このメソッドを呼ぶだけ
     return async (dispatch: any) => {
+        if(param.email === "" || param.password ===""){
+            alert("必須項目が未入力です。")
+            return false
+        }
         return auth.signInWithEmailAndPassword(param.email, param.password)
             .then((result) => {
                 const user = result.user
@@ -46,6 +50,10 @@ type SignUp = {
 export const signUp = (param: SignUp) => {
     // このメソッドを呼ぶだけ
     return async () => {
+        if(param.email === "" || param.password ==="" || param.username === ""){
+            alert("必須項目が未入力です。")
+            return false
+        }
         return auth.createUserWithEmailAndPassword(param.email, param.password)
             .then((result) => {
                 const user = result.user
@@ -94,6 +102,24 @@ export const listenAuthState = () => {
                 
             }
         })
+    }
+}
+
+export const resetPassword = (email:string,navigation:ResetNavigationProp) => {
+    return async() =>{
+        if(email === ""){
+            alert("必須項目が未入力です")
+            return false
+        }else{
+            auth.sendPasswordResetEmail(email)
+                .then(() => {
+                    alert("入力されたアドレスにパスワードリセット用のメールを送りました。")
+                    navigation.navigate('SignIn');
+                }).catch(() => {
+                    alert("パスワードリセットに失敗しました。")
+                })
+        }
+
     }
 }
 

@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from './reducks/store/type';
 import { listenAuthState } from './reducks/user/operation';
-import { Home, SignIn, SignUp } from './templates';
+import { Home, Reset, SignIn, SignUp } from './templates';
 const Stack = createStackNavigator();
 
 export const RootStack = () => {
@@ -28,6 +28,7 @@ export const RootStack = () => {
                 <>
                     <Stack.Screen name="SignIn" component={SignIn} />
                     <Stack.Screen name="SignUp" component={SignUp} />
+                    <Stack.Screen name="Reset" component={Reset} />
                 </>
             )}
         </Stack.Navigator>
@@ -36,8 +37,10 @@ export const RootStack = () => {
 export type SignUpNavigationProp = StackNavigationProp<StackParamList, 'SignUp'>;
 export type SignInNavigationProp = StackNavigationProp<StackParamList, 'SignIn'>;
 export type HomeNavigationProp = StackNavigationProp<StackParamList, 'Home'>;
+export type ResetNavigationProp = StackNavigationProp<StackParamList, 'Reset'>;
 type StackParamList = {
     Home: undefined;
     SignIn: undefined;
     SignUp: undefined;
+    Reset: undefined;
 };

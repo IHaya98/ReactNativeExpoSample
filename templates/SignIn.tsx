@@ -50,6 +50,9 @@ const SignIn: React.FC<Props> = (props) => {
             <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => { navigation.navigate('SignUp')}}>
                 <Text style={styles.buttonTitle}>新規登録を行う</Text>
             </TouchableHighlight>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => { navigation.navigate('Reset')}}>
+                <Text style={styles.buttonTitle}>パスワードリセット</Text>
+            </TouchableHighlight>
         </View>
     );
 }
