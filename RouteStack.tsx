@@ -1,11 +1,12 @@
 import { createStackNavigator, StackNavigationProp } from '@react-navigation/stack';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from './reducks/store/type';
 import { listenAuthState } from './reducks/user/operation';
 import { Home, Reset, SignIn, SignUp } from './templates';
 const Stack = createStackNavigator();
-
+const TabStack = createMaterialTopTabNavigator();
 export const RootStack = () => {
     const selector = useSelector((state: State) => state.users);
     const isSignedIn = selector.isSignedIn;
@@ -17,21 +18,21 @@ export const RootStack = () => {
     }, []);
 
     return (
-        <Stack.Navigator
-            initialRouteName="SignIn"
-        >
+        <>
             {isSignedIn ? (
-                <>
+                <TabStack.Navigator>
                     <Stack.Screen name="Home" component={Home} />
-                </>
+                </TabStack.Navigator>
             ) : (
-                <>
+                <Stack.Navigator
+                    initialRouteName="SignIn"
+                >
                     <Stack.Screen name="SignIn" component={SignIn} />
                     <Stack.Screen name="SignUp" component={SignUp} />
                     <Stack.Screen name="Reset" component={Reset} />
-                </>
+                </Stack.Navigator>
             )}
-        </Stack.Navigator>
+        </>
     );
 };
 export type SignUpNavigationProp = StackNavigationProp<StackParamList, 'SignUp'>;
