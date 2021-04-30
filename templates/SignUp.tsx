@@ -12,7 +12,6 @@ const SignUp: React.FC<Props> = (props) => {
   const [email, setEmail] = useState(""),
     [username, setUsername] = useState(""),
     [password, setPassword] = useState("");
-  const dispatch = useDispatch();
   const navigation = props.navigation;
 
   const inputEmail = useCallback((text) => {
@@ -55,7 +54,7 @@ const SignUp: React.FC<Props> = (props) => {
         placeholder="Password"
         secureTextEntry
       />
-      <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={dispatch(signUp({ email, username, password, navigation }))}>
+      <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={signUp({ email, username, password, navigation })}>
         <Text style={styles.buttonTitle}>新規登録する</Text>
       </TouchableHighlight>
     </View>

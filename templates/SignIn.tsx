@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
+import { useDispatch } from 'react-redux';
 import { signIn } from '../reducks/user/operation';
 import { SignInNavigationProp } from '../RouteStack';
 
@@ -14,7 +15,7 @@ const SignIn: React.FC<Props> = (props) => {
 
     const [email, setEmail] = useState(""),
         [password, setPassword] = useState("");
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const inputEmail = useCallback((text) => {
         setEmail(text);
@@ -43,7 +44,7 @@ const SignIn: React.FC<Props> = (props) => {
                 placeholder="password"
                 secureTextEntry
             />
-            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={signIn({email, password, navigation})}>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(signIn({email, password, navigation}))}>
                 <Text style={styles.buttonTitle}>ログインする</Text>
             </TouchableHighlight>
             <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => { navigation.navigate('SignUp')}}>

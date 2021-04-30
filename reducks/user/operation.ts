@@ -1,6 +1,6 @@
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
-import { SignInNavigationProp, SignUpNavigationProp } from '../../RouteStack';
-import { signInAction } from './action';
+import { HomeNavigationProp, SignInNavigationProp, SignUpNavigationProp } from '../../RouteStack';
+import { signInAction, signOutAction } from './action';
 
 type SignIn = {
     email: string,
@@ -95,5 +95,14 @@ export const listenAuthState = () => {
             }
         })
     }
+}
 
+export const signOut = (navigation:HomeNavigationProp) => {
+    return async(dispatch:any) => {
+        auth.signOut()
+            .then(() => {
+                dispatch(signOutAction());
+                navigation.navigate('SignIn');
+            })
+    }
 }

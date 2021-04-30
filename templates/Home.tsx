@@ -1,5 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
+import { useDispatch } from 'react-redux';
+import { signOut } from '../reducks/user/operation';
 import { HomeNavigationProp } from '../RouteStack';
 
 
@@ -9,11 +11,11 @@ type Props = {
 };
 
 const Home: React.FC<Props> = (props) => {
-    const navigation= props.navigation;
+    const navigation = props.navigation;
 
     const [email, setEmail] = useState(""),
         [password, setPassword] = useState("");
-    //const dispatch = useDispatch();
+    const dispatch = useDispatch();
 
     const inputEmail = useCallback((text) => {
         setEmail(text);
@@ -24,24 +26,10 @@ const Home: React.FC<Props> = (props) => {
     }, [setPassword]);
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>ログイン</Text>
-            <TextInput
-                style={styles.input}
-                value={email}
-                onChangeText={inputEmail}
-                autoCapitalize="none"
-                autoCorrect={false}
-                placeholder="Email"
-            />
-            <TextInput
-                style={styles.input}
-                value={password}
-                onChangeText={inputPassword}
-                autoCapitalize="none"
-                autoCorrect={false}
-                placeholder="password"
-                secureTextEntry
-            />
+            <Text style={styles.title}>Home</Text>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(signOut(navigation))}>
+                <Text style={styles.buttonTitle}>ログアウト</Text>
+            </TouchableHighlight>
         </View>
     );
 }

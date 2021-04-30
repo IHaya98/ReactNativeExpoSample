@@ -9,3 +9,10 @@ export const signInAction = (userState: { isSignedIn: boolean; uid: any; usernam
         }
     }
 };
+export const SIGN_OUT = "SIGN_OUT";
+export const signOutAction = () => {
+    return {
+        type: "SIGN_OUT",
+        payload: null
+    }
+};
