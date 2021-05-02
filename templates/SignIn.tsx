@@ -20,7 +20,7 @@ const SignIn: React.FC = () => {
     }, [setPassword]);
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>ログイン</Text>
+            <Text style={styles.title}>サインイン</Text>
             <TextInput
                 style={styles.input}
                 value={email}

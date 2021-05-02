@@ -1,18 +1,14 @@
+import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch } from 'react-redux';
 import { signUp } from '../reducks/user/operation';
-import { SignUpNavigationProp } from '../RouteStack';
 
-type Props = {
-  navigation: SignUpNavigationProp;
-};
-
-const SignUp: React.FC<Props> = (props) => {
+const SignUp: React.FC = (props) => {
   const [email, setEmail] = useState(""),
     [username, setUsername] = useState(""),
     [password, setPassword] = useState("");
-  const navigation = props.navigation;
+  const navigation = useNavigation();
 
   const inputEmail = useCallback((text) => {
     setUsername(text);
@@ -57,6 +53,9 @@ const SignUp: React.FC<Props> = (props) => {
       <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={signUp({ email, username, password, navigation })}>
         <Text style={styles.buttonTitle}>新規登録する</Text>
       </TouchableHighlight>
+      <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={navigation.goBack}>
+        <Text style={styles.buttonTitle}>前に戻る</Text>
+      </TouchableHighlight>
     </View>
   );
 }
@@ -89,7 +88,8 @@ const styles = StyleSheet.create({
     backgroundColor: '#000',
     width: '60%',
     alignSelf: 'center',
-  },
+    margin: 10,
+},
   buttonTitle: {
     fontSize: 18,
     color: '#fff',

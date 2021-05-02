@@ -28,6 +28,9 @@ const Reset: React.FC = () => {
             <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={resetPassword(email,navigation)}>
                 <Text style={styles.buttonTitle}>パスワードのリセットメールを送信する</Text>
             </TouchableHighlight>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={navigation.goBack}>
+                <Text style={styles.buttonTitle}>前に戻る</Text>
+            </TouchableHighlight>
         </View>
     )
 }
