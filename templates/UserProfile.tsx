@@ -12,12 +12,6 @@ const UserProfile: React.FC = () => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>ユーザー画面</Text>
-            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(signOut(navigation))}>
-                <Text style={styles.buttonTitle}>
-                <Icon name="logout" size={30} />
-                ログアウト
-                </Text>
-            </TouchableHighlight>
         </View>
     );
 }
