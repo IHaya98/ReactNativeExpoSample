@@ -8,7 +8,7 @@ const TabStack = createBottomTabNavigator();
 const BottomTabStack = () => {
     return (
         <TabStack.Navigator tabBarOptions={{
-            activeTintColor: 'tomato',
+            activeTintColor: 'blue',
             inactiveTintColor: 'gray',
         }}>
             <TabStack.Screen name="Home" component={Home} options={{
