@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { AnyIfEmpty, useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../reducks/store/type';
-import { listenAuthState, signOut } from '../../reducks/user/operation';
-import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from '@react-navigation/drawer';
+import { listenAuthState } from '../../reducks/user/operation';
+import { createDrawerNavigator} from '@react-navigation/drawer';
 import HomeStack from './HomeStack';
 import SignInStack from './SignInStack';
 import AweIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native';
 import SignOut from '../../templates/SignOut';
 const Drawer = createDrawerNavigator();
 
