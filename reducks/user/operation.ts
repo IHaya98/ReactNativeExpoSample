@@ -29,7 +29,7 @@ export const signIn = (param: SignIn) => {
                                 username: data.username
                             }))
 
-                            param.navigation.navigate('Home');
+                            param.navigation.navigate('HomeStack');
                         })
                 }
             }).catch((error) => {
@@ -71,7 +71,7 @@ export const signUp = (param: SignUp) => {
 
                     db.collection('users').doc(uid).set(userInitialData)
                         .then(() => {
-                            param.navigation.navigate('SignIn');
+                            param.navigation.navigate('SignInStack');
                         })
                 }
             }).catch((error) => {
@@ -127,7 +127,7 @@ export const signOut = (navigation:any) => {
         auth.signOut()
             .then(() => {
                 dispatch(signOutAction());
-                navigation.navigate('SignIn');
+                navigation.navigate('SignInStack');
             })
     }
 }
