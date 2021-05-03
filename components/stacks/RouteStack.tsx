@@ -7,7 +7,7 @@ import HomeStack from './HomeStack';
 import SignInStack from './SignInStack';
 import AweIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
-import SignOut from '../../templates/SignOut';
+import { SignOut } from '../../templates';
 const Drawer = createDrawerNavigator();
 
 export const RouteStack = () => {

@@ -19,6 +19,8 @@ const getHeaderTitle = (route: any) => {
             return 'ホーム';
         case 'UserProfile':
             return 'ユーザー';
+        case 'NewPost':
+            return '新規追加';
         case 'BottomTabStack':
             return 'ホーム';
     }
@@ -27,7 +29,7 @@ const getHeaderTitle = (route: any) => {
 const HomeStack = () => {
     const navigation = useNavigation();
     return (
-        <Stack.Navigator initialRouteName="HomeScreen">
+        <Stack.Navigator initialRouteName="Home">
             <Stack.Screen
                 name="BottomTabStack"
                 component={BottomTabStack}

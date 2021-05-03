@@ -11,12 +11,12 @@ const SignUp: React.FC = (props) => {
   const navigation = useNavigation();
 
   const inputEmail = useCallback((text) => {
-    setUsername(text);
-  }, [setUsername]);
-
-  const inputUsername = useCallback((text) => {
     setEmail(text);
   }, [setEmail]);
+
+  const inputUsername = useCallback((text) => {
+    setUsername(text);
+  }, [setUsername]);
 
   const inputPassword = useCallback((text) => {
     setPassword(text);

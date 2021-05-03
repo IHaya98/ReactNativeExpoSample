@@ -1,18 +1,38 @@
-import React, { useCallback, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { signOut } from '../reducks/user/operation';
+import React, { useCallback, useEffect, useState } from 'react';
+import { StyleSheet, View, Text, TextInput, TouchableHighlight, SafeAreaView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { fetchTweets } from '../reducks/tweet/operation';
+import { State } from '../reducks/store/type';
+import { Tweet } from '../reducks/tweet/type';
+import { TweetCard } from '../components/tweet';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Home: React.FC = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const selector = useSelector((state: State) => state.tweet)
+    const tweets: Tweet[] = selector.list
+
+
+    useEffect(() => {
+        dispatch(fetchTweets())
+    }, [])
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>ホーム</Text>
-        </View>
+        <SafeAreaView style={styles.container}>
+            <ScrollView>
+                {tweets.length > 0 && (
+                    tweets.map((tweet: Tweet) => (
+                        <TweetCard
+                            key={tweet.id} title={tweet.title} detail={tweet.detail}
+                            username={tweet.username} email={tweet.email}
+                        />
+                    ))
+                )}
+            </ScrollView>
+        </SafeAreaView>
     );
 }
 

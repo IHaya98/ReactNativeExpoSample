@@ -4,5 +4,8 @@ export const initialState = {
         isSignedIn: false,
         uid: "",
         username: ""
+    },
+    tweet: {
+        list:[]
     }
 };
