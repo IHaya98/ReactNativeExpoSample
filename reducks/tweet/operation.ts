@@ -14,6 +14,9 @@ const postsRef = db.collection('posts');
 
 export const newPost = (Tweet: Tweet, navigation: any) => {
     return async (dispatch: any) => {
+        if(Tweet.title==="" || Tweet.detail ===""){
+            return alert("未入力です")
+        }
 
         const timestamp = FirebaseTimestamp.now()
         const id = getUniqueStr();
@@ -34,7 +37,16 @@ export const newPost = (Tweet: Tweet, navigation: any) => {
             })
     }
 }
-
+export const deletePost = (id: string|undefined) => {
+    return async (dispatch: any) => {
+        return postsRef.doc(id).delete()
+            .then(() => {
+                dispatch(fetchTweets())
+            }).catch((error) => {
+                throw new Error(error)
+            })
+    }
+}
 export const fetchTweets = () => {
 
     return async (dispatch: any) => {

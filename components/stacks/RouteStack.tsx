@@ -14,17 +14,16 @@ const Drawer = createDrawerNavigator();
 export const RouteStack = () => {
     const selector = useSelector((state: State) => state.users);
     const isSignedIn = selector.isSignedIn;
-    const [loading, setLoading] = useState(true);
+    const [loading,setLoading] = useState(true);
     const dispatch = useDispatch();
     useEffect(() => {
         if (!isSignedIn) {
             dispatch(listenAuthState())
-            //setLoading(false)
+            setTimeout(()=>{
+                setLoading(false)
+            },1000)
         }
     }, []);
-    if (loading && isSignedIn) {
-        setLoading(false)
-    }
 
     return (
         <>

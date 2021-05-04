@@ -5,4 +5,5 @@ export type Tweet = {
     id?: string,
     title?: string,
     detail?: string
+    toggleModal?:any
 }

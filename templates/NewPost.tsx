@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -23,6 +23,12 @@ const NewPost: React.FC = () => {
     const inputDetail = useCallback((text) => {
         setDetail(text);
     }, [setDetail]);
+
+    const initialize = () => {
+        setHight(48)
+        setTitle("")
+        setDetail("")
+    }
 
     const style_detail = StyleSheet.create({
         inputDetail: {
@@ -54,14 +60,20 @@ const NewPost: React.FC = () => {
                 placeholder="説明"
                 multiline={true}
                 onContentSizeChange={(event) => {
-                    if(event.nativeEvent.contentSize.height<=48){
+                    if (event.nativeEvent.contentSize.height <= 48) {
                         setHight(48);
-                    }else{
+                    } else {
                         setHight(event.nativeEvent.contentSize.height);
                     }
                 }}
             />
-            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(newPost({ title: title, detail: detail, uid: uid },navigation))}>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => {
+                dispatch(newPost({ title: title, detail: detail, uid: uid }, navigation))
+                if(title!="" && detail !=""){
+                    initialize()
+                }
+                
+            }}>
                 <Text style={styles.buttonTitle}>New Post</Text>
             </TouchableHighlight>
         </View>

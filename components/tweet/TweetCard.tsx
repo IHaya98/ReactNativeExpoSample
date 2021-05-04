@@ -1,26 +1,37 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
+import { StyleSheet,Button, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import { useNavigation } from '@react-navigation/native';
-import { Avatar, Button, Card, Title, Paragraph } from 'react-native-paper';
+import { Avatar,  Card, Title, Paragraph, Modal } from 'react-native-paper';
 import { Tweet } from '../../reducks/tweet/type';
+import { deletePost } from '../../reducks/tweet/operation';
+import { TwoButtonAlert } from '../ui-kit';
 
-const TweetCard: React.FC<Tweet> = (props) => {
+const TweetCard: React.FC<Tweet|any> = (props) => {
+    const dispatch = useDispatch();
+    const id = props.id
+    const toggleModal = props.toggleModal;
+    const containerStyle = { backgroundColor: 'white', padding: 50};
+
     return (
         <Card style={styles.container}>
             <Card.Title title={props.username} subtitle={props.email}
                 left={(props) => <AntIcon {...props} name="user" />}
+                right={(props) =>
+                    <Card.Actions>
+                        <Button {...props} title={"DELETE"} onPress={toggleModal} />
+                    </Card.Actions>
+                }
             />
             <Card.Content>
                 <Title>{props.title}</Title>
                 <Paragraph>{props.detail}</Paragraph>
             </Card.Content>
             <Card.Cover source={{ uri: 'https://source.unsplash.com/random' }} />
-            <Card.Actions>
-                <Button>Cancel</Button>
-                <Button>Ok</Button>
-            </Card.Actions>
+            <Modal visible={props.isModalVisible} contentContainerStyle={containerStyle}>
+                    <TwoButtonAlert toggleModal={toggleModal} id={id} />
+            </Modal>
         </Card>
     );
 }
