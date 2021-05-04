@@ -1,5 +1,21 @@
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
-import { signInAction, signOutAction } from './action';
+import { signInAction, signOutAction, updateUserAction } from './action';
+import { User } from './type';
+
+export const updateUserInfo = (user:User) => {
+    return async(dispatch: any) =>{
+        if(user.username === ""){
+            alert("必須項目が未入力です")
+            return false
+        }else{
+            db.collection('users').doc(user.uid).set({username:user.username},{merge: true})
+            .then(()=>{
+                dispatch(updateUserAction(user))
+            })
+        }
+
+    }
+}
 
 type SignIn = {
     email: string,

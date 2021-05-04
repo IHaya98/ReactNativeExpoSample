@@ -53,14 +53,28 @@ export const newPost = (Tweet: Tweet, navigation: any) => {
 export const fetchTweets = () => {
 
     return async (dispatch: any) => {
-        postsRef.get()
-            .then(snapshots => {
-                const postList: Tweet[] = []
-                snapshots.forEach((snapshots: { data: () => any; }) => {
-                    const post = snapshots.data();
-                    postList.push(post)
-                })
-                dispatch(fetchTweetsAction(postList))
-            })
+        const postList: Tweet[] = []
+        const snapshots = await postsRef.orderBy('updated_at', 'desc').get()
+        snapshots.forEach((snapshots) => {
+            const data: Tweet = snapshots.data();
+            const post: Tweet = {
+                id: data.id,
+                uid: data.uid,
+                title: data.title,
+                detail: data.detail,
+                username: "",
+                email: ""
+            }
+            postList.push(post)
+        })
+        Promise.all(postList.map(async (data) => {
+            const snapshots = await db.collection('users').doc(data.uid).get()
+            const user: any = snapshots.data();
+            data.username = user.username;
+            data.email = user.email
+        })).then(()=>{
+            dispatch(fetchTweetsAction(postList))
+        })
     }
 }
+

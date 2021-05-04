@@ -1,17 +1,37 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
-import { useDispatch } from 'react-redux';
-import { signOut } from '../reducks/user/operation';
+import { useDispatch, useSelector } from 'react-redux';
+import { signOut, updateUserInfo } from '../reducks/user/operation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { useNavigation } from '@react-navigation/native';
+import { State } from '../reducks/store/type';
 
 const UserProfile: React.FC = () => {
     const navigation = useNavigation();
     const dispatch = useDispatch();
+    const selector = useSelector((state: State) => state.users);
+    const uid = selector.uid;
+    const [username, setUsername] = useState(selector.username);
+
+    const inputUsername = useCallback((text) => {
+        setUsername(text);
+    }, [setUsername]);
 
     return (
         <View style={styles.container}>
             <Text style={styles.title}>ユーザー画面</Text>
+            <Text style={styles.label}>ユーザー名</Text>
+            <TextInput
+                style={styles.input}
+                value={username}
+                onChangeText={inputUsername}
+                autoCapitalize="none"
+                autoCorrect={false}
+                placeholder="名前"
+            />
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(updateUserInfo({ username:username, uid: uid }))}>
+                <Text style={styles.buttonTitle}>変更を保存</Text>
+            </TouchableHighlight>
         </View>
     );
 }
@@ -27,6 +47,9 @@ const styles = StyleSheet.create({
         fontSize: 28,
         alignSelf: 'center',
         marginBottom: 24,
+    },
+    label: {
+        alignSelf: 'flex-start'
     },
     input: {
         backgroundColor: '#ddd',

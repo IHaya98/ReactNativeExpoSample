@@ -16,3 +16,6 @@ export const firebaseConfig = {
 
 #### react-native-vector-iconsの名前一覧 <br>
 https://oblador.github.io/react-native-vector-icons/
+
+#### 使用しているUIライブラリ <br>
+https://callstack.github.io/react-native-paper/index.html
