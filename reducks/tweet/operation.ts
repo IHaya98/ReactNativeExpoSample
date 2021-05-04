@@ -54,26 +54,29 @@ export const fetchTweets = () => {
 
     return async (dispatch: any) => {
         const postList: Tweet[] = []
-        const snapshots = await postsRef.orderBy('updated_at', 'desc').get()
-        snapshots.forEach((snapshots) => {
-            const data: Tweet = snapshots.data();
-            const post: Tweet = {
-                id: data.id,
-                uid: data.uid,
-                title: data.title,
-                detail: data.detail,
-                username: "",
-                email: ""
-            }
-            postList.push(post)
-        })
-        Promise.all(postList.map(async (data) => {
-            const snapshots = await db.collection('users').doc(data.uid).get()
-            const user: any = snapshots.data();
-            data.username = user.username;
-            data.email = user.email
-        })).then(()=>{
-            dispatch(fetchTweetsAction(postList))
+        postsRef.orderBy('updated_at', 'desc').get()
+        .then((snapshots)=>{
+            snapshots.forEach((snapshots) => {
+                const data: Tweet = snapshots.data();
+                const post: Tweet = {
+                    id: data.id,
+                    uid: data.uid,
+                    title: data.title,
+                    detail: data.detail,
+                    username: "",
+                    email: ""
+                }
+                postList.push(post)
+            })
+        }).then(()=>{
+            Promise.all(postList.map(async (data) => {
+                const snapshots = await db.collection('users').doc(data.uid).get()
+                const user: any = snapshots.data();
+                data.username = user.username;
+                data.email = user.email
+            })).then(()=>{
+                dispatch(fetchTweetsAction(postList))
+            })
         })
     }
 }
