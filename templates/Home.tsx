@@ -15,11 +15,8 @@ const Home: React.FC = () => {
     const dispatch = useDispatch();
     const selector = useSelector((state: State) => state.tweet)
     const tweets: Tweet[] = selector.list
-    const [refreshing, setRefreshing] = useState(false),
-        [isModalVisible, setIsModalVisible] = useState(false);
-    const toggleModal = () => {
-        setIsModalVisible(!isModalVisible);
-    }
+    const [refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
         dispatch(fetchTweets())
     }, [])
@@ -45,7 +42,6 @@ const Home: React.FC = () => {
                         <TweetCard
                             key={tweet.id} title={tweet.title} detail={tweet.detail}
                             username={tweet.username} email={tweet.email} id={tweet.id}
-                            toggleModal={toggleModal} isModalVisible={isModalVisible}
                         />
                     ))
                 )}
