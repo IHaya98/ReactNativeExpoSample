@@ -1,24 +1,30 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { State } from '../../reducks/store/type';
 import { listenAuthState } from '../../reducks/user/operation';
-import { createDrawerNavigator} from '@react-navigation/drawer';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import HomeStack from './HomeStack';
 import SignInStack from './SignInStack';
 import AweIcon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import { SignOut } from '../../templates';
+import { Loading } from '../ui-kit';
 const Drawer = createDrawerNavigator();
 
 export const RouteStack = () => {
     const selector = useSelector((state: State) => state.users);
     const isSignedIn = selector.isSignedIn;
+    const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
     useEffect(() => {
         if (!isSignedIn) {
             dispatch(listenAuthState())
+            //setLoading(false)
         }
     }, []);
+    if (loading && isSignedIn) {
+        setLoading(false)
+    }
 
     return (
         <>
@@ -40,6 +46,8 @@ export const RouteStack = () => {
                             )
                         }} component={SignOut} />
                     </>
+                ) : loading ? (
+                    <Drawer.Screen name="Loading" component={Loading} />
                 ) : (
                     <>
                         <Drawer.Screen name="SignInStack" options={{

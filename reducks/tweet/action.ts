@@ -5,9 +5,7 @@ export const newPostAction = (TweetState: Tweet) => {
     return {
         type: "NEW_POST",
         payload: {
-            email: TweetState.email,
             uid: TweetState.uid,
-            username: TweetState.username,
             title: TweetState.title,
             detail: TweetState.detail,
         }
