@@ -42,6 +42,7 @@ const Home: React.FC = () => {
                         <TweetCard
                             key={tweet.id} title={tweet.title} detail={tweet.detail}
                             username={tweet.username} email={tweet.email} id={tweet.id}
+                            images={tweet.image}
                         />
                     ))
                 )}

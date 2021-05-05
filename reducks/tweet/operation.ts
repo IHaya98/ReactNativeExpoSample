@@ -39,14 +39,19 @@ export const newPost = (Tweet: Tweet, navigation: any) => {
             })
     }
 }
-export const deletePost = (id: string | undefined) => {
+export const deletePost = (id: string | undefined,imageId: string | undefined) => {
     return async (dispatch: any) => {
-        return postsRef.doc(id).delete()
+        await storage.ref('image').child(imageId + '.jpg').delete()
+        .then(()=>{
+            console.log("DELETE STORAGE")
+        })
+        postsRef.doc(id).delete()
             .then(() => {
                 dispatch(fetchTweets())
             }).catch((error) => {
                 throw new Error(error)
             })
+        
     }
 }
 export const fetchTweets = () => {

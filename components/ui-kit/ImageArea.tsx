@@ -8,8 +8,8 @@ import * as ImagePicker from 'expo-image-picker';
 import * as Permissions from 'expo-permissions';
 import { storage } from '../../firebase/index';
 import { getUniqueStr } from '../../reducks/tweet/operation';
-import { ImageType } from '../../templates/NewPost';
 import { ImagePreview } from '.';
+import { ImageType } from '../../reducks/tweet/type';
 
 type ImageArea = {
     images: ImageType
@@ -18,13 +18,8 @@ type ImageArea = {
 const ImageArea: React.FC<ImageArea> = (props) => {
 
     const deleteImage = useCallback(async (id) => {
-        const ret = window.confirm('この画像を削除しますか？')
-        if (!ret) {
-            return false
-        } else {
-            props.setImages(null);
-            return storage.ref('image').child(id+'.jpg').delete()
-        }
+        props.setImages(null);
+        return storage.ref('image').child(id + '.jpg').delete()
     }, [props.images])
 
     const uploadImage = useCallback(async () => {
@@ -49,13 +44,13 @@ const ImageArea: React.FC<ImageArea> = (props) => {
                 props.setImages(newImage)
             });
         })
-    },[props.setImages])
+    }, [props.setImages])
 
     return (
         <View >
             <Button title="写真を選択" onPress={uploadImage} />
             {props.images &&
-                <ImagePreview key={props.images.id} images={props.images} delete={deleteImage}/>
+                <ImagePreview key={props.images.id} images={props.images} delete={deleteImage} />
             }
         </View>
     )
@@ -65,6 +60,6 @@ const styles = StyleSheet.create({
     imageStyle: {
         height: 300,
         flex: 1,
-      },
+    },
 });
 export default ImageArea;

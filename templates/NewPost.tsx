@@ -5,11 +5,7 @@ import { useNavigation } from '@react-navigation/native';
 import { newPost } from '../reducks/tweet/operation';
 import { State } from '../reducks/store/type';
 import { ImageArea } from '../components/ui-kit';
-
-export type ImageType = {
-    id: string
-    path: any
-}
+import { ImageType } from '../reducks/tweet/type';
 
 const NewPost: React.FC = () => {
     const navigation = useNavigation();
@@ -34,6 +30,7 @@ const NewPost: React.FC = () => {
         setHight(48)
         setTitle("")
         setDetail("")
+        setImages(undefined)
     }
 
     const style_detail = StyleSheet.create({
@@ -76,7 +73,7 @@ const NewPost: React.FC = () => {
                 />
                 <ImageArea images={images!} setImages={setImages} />
                 <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => {
-                    dispatch(newPost({ image: images?.path, title: title, detail: detail, uid: uid }, navigation))
+                    dispatch(newPost({ image: images, title: title, detail: detail, uid: uid }, navigation))
                     if (title != "" && detail != "") {
                         initialize()
                     }

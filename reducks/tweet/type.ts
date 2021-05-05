@@ -5,6 +5,11 @@ export type Tweet = {
     id?: string,
     title?: string,
     detail?: string,
-    image?: string,
+    image?: ImageType,
     toggleModal?:any
+}
+
+export type ImageType = {
+    id?: string,
+    path?: string
 }

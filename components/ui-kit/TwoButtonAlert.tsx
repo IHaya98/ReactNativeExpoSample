@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { Alert, StyleSheet, Text, Pressable, View, Button } from "react-native";
-import Modal from 'react-native-modal'
-import { useDispatch } from "react-redux";
-import { deletePost } from "../../reducks/tweet/operation";
+import React from "react";
+import {  StyleSheet, Text,  View, Button } from "react-native";
 
-const TwoButtonAlert = (props: any) => {
-    const dispatch = useDispatch();
+type TwoButtonAlert ={
+    toggleModal: any
+    action: any
+}
+const TwoButtonAlert:React.FC<TwoButtonAlert> = (props) => {
     const toggleModal = props.toggleModal
-    const id = props.id
     return (
         <View style={{ justifyContent: 'center', alignItems: 'center' }}>
             <Text style={styles.title}>削除しますか？</Text>
@@ -15,7 +14,7 @@ const TwoButtonAlert = (props: any) => {
                 <View style={styles.button}>
                     <Button
                         title="削除"
-                        onPress={() => dispatch(deletePost(id))}
+                        onPress={() => props.action()}
                     />
                 </View>
                 <View style={styles.button}>

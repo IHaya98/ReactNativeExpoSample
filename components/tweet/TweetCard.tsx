@@ -11,6 +11,7 @@ import { TwoButtonAlert } from '../ui-kit';
 const TweetCard: React.FC<Tweet|any> = (props) => {
     const dispatch = useDispatch();
     const id = props.id
+    const imageId = props.images.id
     const containerStyle = { backgroundColor: 'white', padding: 50};
     const [isModalVisible, setIsModalVisible] = useState(false);
     const toggleModal = () => {
@@ -30,9 +31,9 @@ const TweetCard: React.FC<Tweet|any> = (props) => {
                 <Title>{props.title}</Title>
                 <Paragraph>{props.detail}</Paragraph>
             </Card.Content>
-            <Card.Cover source={{ uri: 'https://source.unsplash.com/random' }} />
+            <Card.Cover source={{ uri: props.images.path }} />
             <Modal visible={isModalVisible} contentContainerStyle={containerStyle}>
-                    <TwoButtonAlert toggleModal={toggleModal} id={id} />
+                    <TwoButtonAlert toggleModal={toggleModal} action={()=>dispatch(deletePost(id,imageId))} />
             </Modal>
         </Card>
     );
