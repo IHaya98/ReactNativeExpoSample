@@ -1,7 +1,8 @@
 import { Tweet } from "./type";
-import { db, FirebaseTimestamp } from '../../firebase/index'
+import { db, FirebaseTimestamp, storage } from '../../firebase/index'
 import { fetchTweetsAction } from "./action";
-const getUniqueStr = (myStrong?: number): string => {
+
+export const getUniqueStr = (myStrong?: number): string => {
     let strong = 1000;
     if (myStrong) strong = myStrong;
     return (
@@ -14,7 +15,7 @@ const postsRef = db.collection('posts');
 
 export const newPost = (Tweet: Tweet, navigation: any) => {
     return async (dispatch: any) => {
-        if(Tweet.title==="" || Tweet.detail ===""){
+        if (Tweet.title === "" || Tweet.detail === "") {
             return alert("未入力です")
         }
 
@@ -25,6 +26,7 @@ export const newPost = (Tweet: Tweet, navigation: any) => {
             id: id,
             title: Tweet.title,
             detail: Tweet.detail,
+            image: Tweet.image,
             updated_at: timestamp
         }
 
@@ -37,7 +39,7 @@ export const newPost = (Tweet: Tweet, navigation: any) => {
             })
     }
 }
-export const deletePost = (id: string|undefined) => {
+export const deletePost = (id: string | undefined) => {
     return async (dispatch: any) => {
         return postsRef.doc(id).delete()
             .then(() => {
@@ -52,29 +54,30 @@ export const fetchTweets = () => {
     return async (dispatch: any) => {
         const postList: Tweet[] = []
         postsRef.orderBy('updated_at', 'desc').get()
-        .then((snapshots)=>{
-            snapshots.forEach((snapshots) => {
-                const data: Tweet = snapshots.data();
-                const post: Tweet = {
-                    id: data.id,
-                    uid: data.uid,
-                    title: data.title,
-                    detail: data.detail,
-                    username: "",
-                    email: ""
-                }
-                postList.push(post)
+            .then((snapshots) => {
+                snapshots.forEach((snapshots) => {
+                    const data: Tweet = snapshots.data();
+                    const post: Tweet = {
+                        id: data.id,
+                        uid: data.uid,
+                        title: data.title,
+                        detail: data.detail,
+                        image: data.image,
+                        username: "",
+                        email: ""
+                    }
+                    postList.push(post)
+                })
+            }).then(() => {
+                Promise.all(postList.map(async (data) => {
+                    const snapshots = await db.collection('users').doc(data.uid).get()
+                    const user: any = snapshots.data();
+                    data.username = user.username;
+                    data.email = user.email
+                })).then(() => {
+                    dispatch(fetchTweetsAction(postList))
+                })
             })
-        }).then(()=>{
-            Promise.all(postList.map(async (data) => {
-                const snapshots = await db.collection('users').doc(data.uid).get()
-                const user: any = snapshots.data();
-                data.username = user.username;
-                data.email = user.email
-            })).then(()=>{
-                dispatch(fetchTweetsAction(postList))
-            })
-        })
     }
 }
 
