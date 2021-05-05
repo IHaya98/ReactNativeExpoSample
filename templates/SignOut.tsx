@@ -1,8 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
+import React, { useEffect } from 'react';
+import { StyleSheet, View } from 'react-native';
 import { useDispatch } from 'react-redux';
-import { signIn, signOut } from '../reducks/user/operation';
+import { signOut } from '../reducks/user/operation';
 
 const SignOut: React.FC = () => {
     const navigation= useNavigation();

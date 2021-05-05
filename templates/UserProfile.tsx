@@ -1,8 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { signOut, updateUserInfo } from '../reducks/user/operation';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { updateUserInfo } from '../reducks/user/operation';
 import { useNavigation } from '@react-navigation/native';
 import { State } from '../reducks/store/type';
 

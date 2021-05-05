@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useCallback, useState } from 'react';
 import { StyleSheet, View, Text, TextInput, TouchableHighlight } from 'react-native';
-import { useDispatch } from 'react-redux';
 import { signUp } from '../reducks/user/operation';
 
 const SignUp: React.FC = (props) => {

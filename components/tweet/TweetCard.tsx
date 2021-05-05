@@ -1,18 +1,18 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet,Button, View, Text, TextInput, TouchableHighlight } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableHighlight } from 'react-native';
+import { useDispatch } from 'react-redux';
 import AntIcon from 'react-native-vector-icons/AntDesign';
-import { useNavigation } from '@react-navigation/native';
-import { Avatar,  Card, Title, Paragraph, Modal } from 'react-native-paper';
+import MaterialIcon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { Card, Title, Paragraph, Modal } from 'react-native-paper';
 import { Tweet } from '../../reducks/tweet/type';
 import { deletePost } from '../../reducks/tweet/operation';
 import { TwoButtonAlert } from '../ui-kit';
 
-const TweetCard: React.FC<Tweet|any> = (props) => {
+const TweetCard: React.FC<Tweet | any> = (props) => {
     const dispatch = useDispatch();
     const id = props.id
     const imageId = props.images.id
-    const containerStyle = { backgroundColor: 'white', padding: 50};
+    const containerStyle = { backgroundColor: 'white', padding: 50 };
     const [isModalVisible, setIsModalVisible] = useState(false);
     const toggleModal = () => {
         setIsModalVisible(!isModalVisible);
@@ -23,7 +23,9 @@ const TweetCard: React.FC<Tweet|any> = (props) => {
                 left={(props) => <AntIcon {...props} name="user" />}
                 right={(props) =>
                     <Card.Actions>
-                        <Button {...props} title={"DELETE"} onPress={toggleModal} />
+                        <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={toggleModal}>
+                            <Text style={styles.buttonTitle}><MaterialIcon {...props} name="delete" />DELETE</Text>
+                        </TouchableHighlight>
                     </Card.Actions>
                 }
             />
@@ -31,10 +33,14 @@ const TweetCard: React.FC<Tweet|any> = (props) => {
                 <Title>{props.title}</Title>
                 <Paragraph>{props.detail}</Paragraph>
             </Card.Content>
-            <Card.Cover source={{ uri: props.images.path }} />
-            <Modal visible={isModalVisible} contentContainerStyle={containerStyle}>
-                    <TwoButtonAlert toggleModal={toggleModal} action={()=>dispatch(deletePost(id,imageId))} />
-            </Modal>
+            {props.images &&
+                <>
+                    <Card.Cover source={{ uri: props.images.path }} />
+                    <Modal visible={isModalVisible} contentContainerStyle={containerStyle}>
+                        <TwoButtonAlert toggleModal={toggleModal} action={() => dispatch(deletePost(id, imageId))} />
+                    </Modal>
+                </>
+            }
         </Card>
     );
 }
@@ -64,8 +70,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#000',
-        width: '60%',
+        backgroundColor: '#C70F66',
         alignSelf: 'center',
         margin: 10,
     },

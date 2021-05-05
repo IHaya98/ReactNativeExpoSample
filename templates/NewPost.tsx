@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, Button, Image, ScrollView, SafeAreaView } from 'react-native';
+import React, { useCallback, useState } from 'react';
+import { StyleSheet,  Text, TextInput, TouchableHighlight, ScrollView, SafeAreaView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { newPost } from '../reducks/tweet/operation';
@@ -37,7 +37,7 @@ const NewPost: React.FC = () => {
         inputDetail: {
             backgroundColor: '#ddd',
             height: height,
-            marginBottom: 16,
+            margin: 20,
             borderWidth: 1,
             borderColor: '#ccc',
             padding: 8,
@@ -46,7 +46,6 @@ const NewPost: React.FC = () => {
     return (
         <SafeAreaView style={styles.container}>
             <ScrollView>
-                <Text style={styles.title}>新規追加</Text>
                 <TextInput
                     style={styles.input}
                     value={title}
@@ -100,7 +99,7 @@ const styles = StyleSheet.create({
     input: {
         backgroundColor: '#ddd',
         height: 48,
-        marginBottom: 16,
+        margin: 20,
         borderWidth: 1,
         borderColor: '#ccc',
         padding: 8,
@@ -113,7 +112,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#000',
         width: '60%',
         alignSelf: 'center',
-        margin: 10,
+        margin: 20,
     },
     buttonTitle: {
         fontSize: 18,

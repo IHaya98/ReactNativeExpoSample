@@ -18,6 +18,9 @@ export const newPost = (Tweet: Tweet, navigation: any) => {
         if (Tweet.title === "" || Tweet.detail === "") {
             return alert("未入力です")
         }
+        if(!Tweet.image){
+            Tweet.image = {}
+        }
 
         const timestamp = FirebaseTimestamp.now()
         const id = getUniqueStr();

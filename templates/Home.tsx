@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, SafeAreaView, RefreshControl } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, SafeAreaView, RefreshControl } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { fetchTweets } from '../reducks/tweet/operation';
@@ -7,8 +7,6 @@ import { State } from '../reducks/store/type';
 import { Tweet } from '../reducks/tweet/type';
 import { TweetCard } from '../components/tweet';
 import { ScrollView } from 'react-native-gesture-handler';
-import { TwoButtonAlert } from '../components/ui-kit';
-import { Modal } from 'react-native-paper';
 
 const Home: React.FC = () => {
     const navigation = useNavigation();

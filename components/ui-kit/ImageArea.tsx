@@ -1,11 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableHighlight, Button, Image } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useNavigation } from '@react-navigation/native';
-import Constants from 'expo-constants';
+import React, { useCallback } from 'react';
+import { StyleSheet, View, Text, TouchableHighlight } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-import * as Permissions from 'expo-permissions';
 import { storage } from '../../firebase/index';
 import { getUniqueStr } from '../../reducks/tweet/operation';
 import { ImagePreview } from '.';
@@ -23,7 +18,7 @@ const ImageArea: React.FC<ImageArea> = (props) => {
     }, [props.images])
 
     const uploadImage = useCallback(async () => {
-        let result: any = await ImagePicker.launchImageLibraryAsync({
+        const result: any = await ImagePicker.launchImageLibraryAsync({
             mediaTypes: ImagePicker.MediaTypeOptions.All,
             allowsEditing: true,
             aspect: [4, 3],
@@ -48,7 +43,9 @@ const ImageArea: React.FC<ImageArea> = (props) => {
 
     return (
         <View >
-            <Button title="写真を選択" onPress={uploadImage} />
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={uploadImage}>
+                <Text style={styles.buttonTitle}>写真を選択</Text>
+            </TouchableHighlight>
             {props.images &&
                 <ImagePreview key={props.images.id} images={props.images} delete={deleteImage} />
             }
@@ -57,6 +54,20 @@ const ImageArea: React.FC<ImageArea> = (props) => {
 }
 
 const styles = StyleSheet.create({
+    button: {
+        height: 48,
+        borderRadius: 4,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#000',
+        width: '60%',
+        alignSelf: 'center',
+        margin: 20,
+    },
+    buttonTitle: {
+        fontSize: 18,
+        color: '#fff',
+    },
     imageStyle: {
         height: 300,
         flex: 1,
