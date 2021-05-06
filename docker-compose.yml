@@ -1,0 +1,17 @@
+version: "3"
+services:
+  react_native:
+    container_name: react-native-expo
+    build: .
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
+    tty: true
+    stdin_open: true
+    environment:
+        - REACT_NATIVE_PACKAGER_HOSTNAME=${REACT_NATIVE_PACKAGER_HOSTNAME}
+    command: sh -c "cd /usr/src/app/ && npm start"
+    ports:
+      - "19000:19000"
+      - "19001:19001"
+      - "19002:19002"
