@@ -1,8 +1,9 @@
 import { auth, db, FirebaseTimestamp } from '../../firebase/index'
+import { fetchTweets } from '../tweet/operation';
 import { signInAction, signOutAction, updateUserAction } from './action';
 import { User } from './type';
 
-export const updateUserInfo = (user:User) => {
+export const updateUserInfo = (user:User, navigation: any) => {
     return async(dispatch: any) =>{
         if(user.username === ""){
             alert("必須項目が未入力です")
@@ -11,6 +12,8 @@ export const updateUserInfo = (user:User) => {
             db.collection('users').doc(user.uid).set({username:user.username},{merge: true})
             .then(()=>{
                 dispatch(updateUserAction(user))
+                navigation.navigate('Home')
+                dispatch(fetchTweets())
             })
         }
 

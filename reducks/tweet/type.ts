@@ -6,6 +6,7 @@ export type Tweet = {
     title?: string,
     detail?: string,
     image?: ImageType | undefined,
+    likes?: boolean,
     toggleModal?:any
 }
 

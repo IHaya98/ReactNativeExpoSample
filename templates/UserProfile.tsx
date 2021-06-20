@@ -28,7 +28,7 @@ const UserProfile: React.FC = () => {
                 autoCorrect={false}
                 placeholder="名前"
             />
-            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(updateUserInfo({ username:username, uid: uid }))}>
+            <TouchableHighlight underlayColor="#C70F66" style={styles.button} onPress={() => dispatch(updateUserInfo({ username:username, uid: uid }, navigation))}>
                 <Text style={styles.buttonTitle}>変更を保存</Text>
             </TouchableHighlight>
         </View>

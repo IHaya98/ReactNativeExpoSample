@@ -7,13 +7,23 @@ import { Card, Title, Paragraph, Modal } from 'react-native-paper';
 import { Tweet } from '../../reducks/tweet/type';
 import { deletePost } from '../../reducks/tweet/operation';
 import { TwoButtonAlert } from '../ui-kit';
+import { db } from '../../firebase/index'
 
 const TweetCard: React.FC<Tweet | any> = (props) => {
     const dispatch = useDispatch();
     const id = props.id
     const imageId = props.images.id
     const containerStyle = { backgroundColor: 'white', padding: 50 };
-    const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isModalVisible, setIsModalVisible] = useState(false),
+    [isLike, setIsLike] = useState(false);
+    const toggleLike = async() => {
+        setIsLike(!isLike);
+        if(isLike){
+            await db.collection('posts').doc(id).set({likes:0},{merge:true});
+        }else{
+            await db.collection('posts').doc(id).set({likes:1},{merge:true});
+        }
+    }
     const toggleModal = () => {
         setIsModalVisible(!isModalVisible);
     }
@@ -40,6 +50,12 @@ const TweetCard: React.FC<Tweet | any> = (props) => {
                         <TwoButtonAlert toggleModal={toggleModal} action={() => dispatch(deletePost(id, imageId))} />
                     </Modal>
                 </>
+            }
+            {isLike &&
+                <AntIcon {...props} style={styles.likebutton} name="heart" size={30} onPress={toggleLike}/>
+            }
+            {!isLike &&
+                <AntIcon {...props} style={styles.likebutton} name="hearto" size={30} onPress={toggleLike}/>
             }
         </Card>
     );
@@ -78,6 +94,12 @@ const styles = StyleSheet.create({
         fontSize: 18,
         color: '#fff',
     },
+    likebutton:{
+        justifyContent: 'center',
+        alignItems: 'flex-end',
+        alignSelf: 'flex-end',
+        margin: 10,
+    }
 });
 
 export default TweetCard;

@@ -18,4 +18,4 @@ export const fetchTweetsAction = (TweetState: Tweet[]) => {
         type: "FETCH_TWEETS",
         payload: TweetState
     }
-}
+};
